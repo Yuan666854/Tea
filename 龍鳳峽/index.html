@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芸真苑 - 茶品介紹</title>
+    <style>
+        /* --- 基礎設定 --- */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f4; /* 背景色 */
+            font-family: "Microsoft JhengHei", sans-serif;
+        }
+
+        /* --- 卡片容器 (已修改為橫式) --- */
+        .card-container {
+            width: 95%;          /* 手機版寬度佔 95%，讓橫圖盡量大 */
+            max-width: 600px;    /* 電腦版限制最大寬度 */
+            
+            /* 【關鍵修改】這裡改成了 16/9，完美對應您的橫式圖片 */
+            aspect-ratio: 16/9;  
+            
+            perspective: 1000px; /* 3D 景深效果 */
+            cursor: pointer;     /* 滑鼠移上去變手指 */
+        }
+
+        /* --- 卡片本體 --- */
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        /* --- 正反面設定 --- */
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 10px; /* 橫式圖片圓角稍微小一點比較好看 */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            background-color: #fff; /* 防止透明圖破圖 */
+        }
+
+        /* --- 圖片設定 --- */
+        img {
+            width: 100%;
+            height: 100%;
+            
+            /* 【保險設定】contain 確保整張圖完整縮放進去，絕對不裁切 */
+            object-fit: contain; 
+            
+            display: block;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* --- 提示文字 (調整位置以免擋到字) --- */
+        .hint {
+            position: absolute;
+            bottom: 10px;         /* 稍微靠下一點 */
+            right: 10px;          /* 改到右下角，比較不會擋到您的茶葉介紹 */
+            left: auto;           /* 取消置中 */
+            transform: none;      /* 取消置中位移 */
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 12px;
+            background-color: rgba(0,0,0,0.4);
+            padding: 4px 12px;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container" onclick="flipCard()">
+        <div class="card-inner" id="myCard">
+            
+            <div class="card-front">
+                <img src="front.png" alt="茶葉介紹">
+                <div class="hint">👆 點擊翻面</div>
+            </div>
+
+            <div class="card-back">
+                <img src="back.png" alt="沖泡指南">
+                <div class="hint">👆 點擊返回</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function flipCard() {
+            document.getElementById('myCard').classList.toggle('flipped');
+        }
+    </script>
+
+</body>
+</html>
